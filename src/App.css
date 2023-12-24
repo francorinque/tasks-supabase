@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  @apply bg-dark text-light;
+}
+
+.wrapper_form {
+  @apply mx-auto w-full md:w-[600px];
+}
+
+.form_head {
+  @apply text-4xl font-semibold;
+}
+
+.green_gradient {
+  @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
+}
+
+.black_btn {
+  @apply rounded-full border border-green-300 bg-green-500 py-1.5 px-5 text-white transition-all hover:bg-transparent text-center text-sm  flex items-center justify-center outline-none;
+}
+
+.outline_btn {
+  @apply rounded-full border border-green-300 bg-transparent py-1.5 px-5 text-green-300 transition-all hover:bg-green-500 hover:text-light text-center text-sm  flex items-center justify-center;
+}
+
+.glassmorphism {
+  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
+}
+
+.input {
+  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 pl-5 pr-12 text-sm shadow-lg font-medium focus:border-dark focus:outline-none focus:ring-0 my-4 text-dark;
+}

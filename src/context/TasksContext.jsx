@@ -35,8 +35,19 @@ const TasksProvider = ({ children }) => {
     }
   }
 
+  const addTask = async (newTask) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    const { error } = await supabase
+      .from("tasks")
+      .insert({ name: newTask, userId: user.id })
+    if (error) throw Error(error)
+  }
+
   return (
-    <TasksContext.Provider value={{ allTasks, getAllTasks }}>
+    <TasksContext.Provider value={{ allTasks, getAllTasks, addTask }}>
       {children}
     </TasksContext.Provider>
   )

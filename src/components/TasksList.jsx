@@ -1,20 +1,19 @@
 import { useEffect } from "react"
 import { useTasks } from "../context/TasksContext"
-import { Link } from "react-router-dom"
 
-const TasksList = () => {
+import TaskCard from "./TaskCard"
+
+const TasksList = ({ done }) => {
   const { allTasks, getAllTasks } = useTasks()
 
   useEffect(() => {
-    getAllTasks()
+    getAllTasks(done)
   }, [])
 
   return (
-    <div>
+    <div className="w-full flex flex-wrap gap-5 items-center justify-start">
       {allTasks?.map((item) => (
-        <div key={item.id}>
-          <Link to={`/task/${item.id}`}>{item.name}</Link>
-        </div>
+        <TaskCard key={item.id} item={item} />
       ))}
     </div>
   )

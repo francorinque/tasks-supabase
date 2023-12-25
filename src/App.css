@@ -14,6 +14,32 @@ body {
   @apply bg-dark text-light;
 }
 
+.card {
+  position: relative;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px; /* Ajusta la altura de la sombra según tus preferencias */
+  /* Color y opacidad de la sombra */
+  opacity: 0; /* Inicialmente la sombra no es visible */
+  transition: opacity 0.3s ease; /* Agrega una transición suave */
+  filter: blur(5px);
+  @apply bg-green-400;
+}
+
+.card:hover::after {
+  opacity: 1; /* Hace visible la sombra al hacer hover */
+}
+
+.card.done::after {
+  overflow: 1;
+}
+
 .wrapper_form {
   @apply mx-auto w-full md:w-[600px];
 }

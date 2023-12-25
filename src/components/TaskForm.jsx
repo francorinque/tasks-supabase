@@ -6,7 +6,7 @@ const TaskForm = ({ type, onSubmit, isLoading, taskValue, onChange }) => {
   return (
     <div className="wrapper_form glassmorphism">
       <h2 className="form_head">{type} Task</h2>
-      <form onSubmit={(e) => onSubmit(e, task)}>
+      <form onSubmit={onSubmit}>
         <input
           type="text"
           placeholder="Title..."

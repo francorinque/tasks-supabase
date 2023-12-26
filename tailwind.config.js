@@ -4,9 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        neutral: "#3e3e3b",
-        light: "#fefffd",
-        dark: "#2A2A28",
+        // neutral: "#3e3e3b",
+        neutral: "#374055",
+        light: "#efefef",
+        dark: "#292e3c",
+        // dark: "#2A2A28",
       },
       backgroundImage: {
         textGradient:

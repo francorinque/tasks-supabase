@@ -1,8 +1,11 @@
 import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+
 import Nav from "./components/Nav"
 import MyRoutes from "./routes/MyRoutes"
 import supabase from "./supabase/client"
+
+// logica de borrado de tareas
 
 function App() {
   const location = useLocation()

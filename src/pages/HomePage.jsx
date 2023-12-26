@@ -1,33 +1,25 @@
-import { useState } from "react"
-import TasksList from "../components/TasksList"
-
-const tabsData = ["all", "done"]
+import { useEffect } from "react"
+import { NavLink, Navigate, Outlet, useLocation } from "react-router-dom"
+import { useTasks } from "../context/TasksContext"
 
 const HomePage = () => {
-  const [tab, setTab] = useState("all")
+  const location = useLocation()
+  const { getAllTasks } = useTasks()
 
-  const firstLetterUpperCase = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-  }
+  useEffect(() => {
+    getAllTasks()
+  }, [])
 
   return (
     <>
       <section className="padding-t">
-        <div className="mb-10 flex items center justify-center gap-4">
-          {tabsData.map((item, idx) => (
-            <button
-              key={idx}
-              className={`${
-                tab === item ? "text-green-500 font-semibold" : "text-light"
-              }`}
-              onClick={() => setTab(item)}
-            >
-              {firstLetterUpperCase(item)}
-            </button>
-          ))}
-        </div>
-
-        {tab === "all" ? <TasksList /> : <TasksList done={true} />}
+        {location.pathname === "/" && <Navigate to="/all" />}
+        <nav className="flex justify-center items-center mb-5 gap-4">
+          <NavLink to="/all">All</NavLink>
+          <NavLink to="/pending">Pending</NavLink>
+          <NavLink to="/completed">Completed</NavLink>
+        </nav>
+        <Outlet />
       </section>
     </>
   )

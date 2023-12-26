@@ -15,20 +15,19 @@ export const useTasks = () => {
 }
 
 const TasksProvider = ({ children }) => {
-  const [allTasks, setAllTasks] = useState([])
+  const [tasksData, setAllTasks] = useState([])
 
-  const getAllTasks = async (done = false) => {
+  const getAllTasks = async () => {
     try {
       const {
         data: { user },
       } = await supabase.auth.getUser()
+
       const { data: tasks } = await supabase
         .from("tasks")
         .select()
         .eq("userId", user.id)
-        .eq("done", done)
         .order("created_at", { ascending: false })
-
       setAllTasks(tasks)
     } catch (error) {
       console.log(error)
@@ -47,7 +46,9 @@ const TasksProvider = ({ children }) => {
   }
 
   return (
-    <TasksContext.Provider value={{ allTasks, getAllTasks, addTask }}>
+    <TasksContext.Provider
+      value={{ tasksData, setAllTasks, getAllTasks, addTask }}
+    >
       {children}
     </TasksContext.Provider>
   )

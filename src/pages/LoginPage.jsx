@@ -9,6 +9,8 @@ const LoginPage = () => {
   const [isSubmiting, setIsSubmiting] = useState(false)
   const [error, setError] = useState(null)
 
+  const navigate = useNavigate()
+
   const handleLogin = async (e) => {
     e.preventDefault()
     setIsSubmiting(true)
@@ -18,6 +20,7 @@ const LoginPage = () => {
         password,
       })
       if (error) throw Error(error)
+      navigate("/")
     } catch (error) {
       console.log(error)
       setError(error)

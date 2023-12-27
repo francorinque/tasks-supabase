@@ -1,12 +1,15 @@
 import { useState } from "react"
 import supabase from "../supabase/client"
 import MyForm from "../components/MyForm"
+import { useNavigate } from "react-router-dom"
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isSubmiting, setIsSubmiting] = useState(false)
   const [error, setError] = useState(null)
+
+  const navigate = useNavigate()
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -16,12 +19,12 @@ const RegisterPage = () => {
         email,
         password,
         options: {
-          emailRedirectTo: "http//localhost:5173/login",
+          emailRedirectTo: "https://tasks-app-green.vercel.app/login",
+          // emailRedirectTo: "http//localhost:5173/login",
         },
       })
       if (error) throw Error(error)
-
-      console.log(data)
+      navigate("/login")
     } catch (error) {
       console.log(error)
       setError(error)

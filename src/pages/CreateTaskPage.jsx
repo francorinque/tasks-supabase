@@ -6,6 +6,7 @@ import TaskForm from "../components/TaskForm"
 
 const CreateTaskPage = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [msg, setMsg] = useState("")
   const [task, setTask] = useState("")
 
   const { addTask } = useTasks()
@@ -16,6 +17,8 @@ const CreateTaskPage = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
+      if (!task.length) return alert("Task can't be empty")
+
       await addTask(task)
       setTask("")
       navigate("/")
@@ -27,6 +30,10 @@ const CreateTaskPage = () => {
     }
   }
 
+  const handleChange = (e) => {
+    setTask(e.target.value)
+  }
+
   return (
     <section>
       <TaskForm
@@ -34,7 +41,7 @@ const CreateTaskPage = () => {
         onSubmit={handleSubmit}
         isLoading={isLoading}
         taskValue={task}
-        onChange={(e) => setTask(e.target.value)}
+        onChange={handleChange}
       />
     </section>
   )

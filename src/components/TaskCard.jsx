@@ -1,52 +1,20 @@
-import supabase from "../supabase/client"
-import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
 import {
-  TrashIcon,
-  PencilIcon,
-  CheckIcon,
   BeakerIcon,
+  CheckIcon,
+  PencilIcon,
+  TrashIcon,
 } from "@heroicons/react/24/solid"
+import { Link } from "react-router-dom"
 
-import ModalTask from "./ModalTask"
-import { fixedDate, fixedName } from "../utils"
 import { useTasks } from "../context/TasksContext"
+import { fixedDate } from "../utils"
 
 const TaskCard = ({ item }) => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const { setAllTasks } = useTasks()
-
-  const handleChangeDone = async (done) => {
-    try {
-      const { error } = await supabase
-        .from("tasks")
-        .update({ done })
-        .eq("id", item.id)
-
-      if (error) throw Error(error)
-
-      setAllTasks((prev) =>
-        prev.map((task) => (task.id === item.id ? { ...task, done } : task))
-      )
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleDelete = async () => {
-    try {
-      const { error } = await supabase.from("tasks").delete().eq("id", item.id)
-      if (error) throw Error(error)
-      setAllTasks((prev) => prev.filter((task) => task.id !== item.id))
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const { deleteTask, changeStatus } = useTasks()
 
   return (
     <>
-      <div className=" w-full max-w-[400px]  bg-neutral rounded-md  flex items-center justify-between gap-4 p-5">
+      <div className="w-full overflow-hidden bg-neutral rounded-md  flex items-center justify-between gap-4 p-5 cursor-pointer ">
         {/* check icon */}
         <div
           className={`grid items-center cursor-pointer hover:scale-110 transition-transform justify-center  w-10 h-10 rounded-full  ${
@@ -57,29 +25,26 @@ const TaskCard = ({ item }) => {
           {item.done ? (
             <CheckIcon
               className="w-5 h-5"
-              onClick={() => {
-                handleChangeDone(false)
-              }}
+              onClick={() => changeStatus(false, item.id)}
             />
           ) : (
             <BeakerIcon
               className="w-5 h-5"
-              onClick={() => {
-                handleChangeDone(true)
-              }}
+              onClick={() => changeStatus(true, item.id)}
             />
           )}
         </div>
         {/* task text */}
-        <div className="flex-1 flex flex-col justify-center items-start">
+        <div className="flex-1 flex flex-col justify-center items-start gap-2">
           <p
             className={`${
               item.done ? "text-green-500" : "text-light"
-            } text-2xl font-bold`}
+            } text-1xl md:text-2xl leading-none font-bold whitespace-normal`}
           >
-            {fixedName(item)}
+            {item.name}
+            {/* {fixedName(item)} */}
           </p>
-          <small>{fixedDate(item)}</small>
+          <small className="text-xs md:text-1xl">{fixedDate(item)}</small>
         </div>
 
         {/* task options */}
@@ -90,18 +55,12 @@ const TaskCard = ({ item }) => {
           </Link>
           <TrashIcon
             className="w-4 h-4 cursor-pointer hover:scale-150 transition-transform text-red-300"
-            onClick={handleDelete}
+            onClick={() => deleteTask(item.id)}
           />
         </div>
       </div>
       {/* modal
        */}
-
-      <ModalTask
-        item={item}
-        isOpen={isOpen}
-        closeModal={() => setIsOpen(false)}
-      />
     </>
   )
 }

@@ -16,8 +16,10 @@ export const useTasks = () => {
 
 const TasksProvider = ({ children }) => {
   const [tasksData, setAllTasks] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const getAllTasks = async () => {
+    setIsLoading(true)
     try {
       const {
         data: { user },
@@ -31,6 +33,9 @@ const TasksProvider = ({ children }) => {
       setAllTasks(tasks)
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -45,9 +50,44 @@ const TasksProvider = ({ children }) => {
     if (error) throw Error(error)
   }
 
+  const changeStatus = async (done, itemId) => {
+    try {
+      const { error } = await supabase
+        .from("tasks")
+        .update({ done })
+        .eq("id", itemId)
+
+      if (error) throw Error(error)
+
+      setAllTasks((prev) =>
+        prev.map((task) => (task.id === itemId ? { ...task, done } : task))
+      )
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteTask = async (itemId) => {
+    try {
+      const { error } = await supabase.from("tasks").delete().eq("id", itemId)
+      if (error) throw Error(error)
+      setAllTasks((prev) => prev.filter((task) => task.id !== itemId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <TasksContext.Provider
-      value={{ tasksData, setAllTasks, getAllTasks, addTask }}
+      value={{
+        tasksData,
+        setAllTasks,
+        getAllTasks,
+        addTask,
+        deleteTask,
+        isLoading,
+        changeStatus,
+      }}
     >
       {children}
     </TasksContext.Provider>

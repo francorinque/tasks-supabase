@@ -14,6 +14,10 @@ body {
   @apply bg-dark text-light;
 }
 
+.active {
+  @apply text-light;
+}
+
 .wrapper_form {
   @apply mx-auto w-full md:w-[600px];
 }
@@ -35,7 +39,7 @@ body {
 }
 
 .glassmorphism {
-  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
+  @apply rounded-xl border border-gray-100 bg-white/5 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
 }
 
 .input {

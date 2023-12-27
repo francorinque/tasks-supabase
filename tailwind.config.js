@@ -14,6 +14,9 @@ export default {
         textGradient:
           "bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent",
       },
+      gridTemplateColumns: {
+        gridTasks: "repeat(auto-fit, minmax(300px, 500px))",
+      },
     },
   },
   plugins: [],

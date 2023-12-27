@@ -19,7 +19,7 @@ const RegisterPage = () => {
         email,
         password,
         options: {
-          emailRedirectTo: "https://tasks-app-green.vercel.app/login",
+          emailRedirectTo: "https://tasks-app-green.vercel.app/#/login",
           // emailRedirectTo: "http//localhost:5173/login",
         },
       })

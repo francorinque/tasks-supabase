@@ -16,7 +16,7 @@ const Nav = () => {
   return (
     <header>
       <nav className="w-full border-b border-neutral px-4 flex items-center justify-between max-w-7xl mx-auto md:py-5">
-        <div className="text-3xl font-bold">Tasks</div>
+        <div className="text-3xl font-bold">RTasks</div>
 
         <ul className=" gap-4 items-center hidden md:flex">
           {dataMenu.map(({ id, text, to }) => (
